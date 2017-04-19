@@ -1,0 +1,624 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/danielgtaylor/aglio#readme"
+
+    >aglio (v2.3.0)</a>
+</h1>
+<h4>An API Blueprint renderer with theme support</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.aglio">module aglio</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.collectPathsSync">
+            function <span class="apidocSignatureSpan">aglio.</span>collectPathsSync
+            <span class="apidocSignatureSpan">(input, includePath)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.compileFile">
+            function <span class="apidocSignatureSpan">aglio.</span>compileFile
+            <span class="apidocSignatureSpan">(inputFile, outputFile, done)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.getTheme">
+            function <span class="apidocSignatureSpan">aglio.</span>getTheme
+            <span class="apidocSignatureSpan">(name)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.render">
+            function <span class="apidocSignatureSpan">aglio.</span>render
+            <span class="apidocSignatureSpan">(input, options, done)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.renderFile">
+            function <span class="apidocSignatureSpan">aglio.</span>renderFile
+            <span class="apidocSignatureSpan">(inputFile, outputFile, options, done)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">aglio.</span>bin</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.aglio.bin">module aglio.bin</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.aglio.bin.run">
+            function <span class="apidocSignatureSpan">aglio.bin.</span>run
+            <span class="apidocSignatureSpan">(argv, done)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.aglio" id="apidoc.module.aglio">module aglio</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.collectPathsSync" id="apidoc.element.aglio.collectPathsSync">
+        function <span class="apidocSignatureSpan">aglio.</span>collectPathsSync
+        <span class="apidocSignatureSpan">(input, includePath)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">collectPathsSync = function (input, includePath) {
+  var paths;
+  paths = [];
+  input.replace(INCLUDE, function(match, spaces, filename) {
+    var content, fullPath;
+    fullPath = path.join(includePath, filename);
+    paths.push(fullPath);
+    content = fs.readFileSync(fullPath, &#x27;utf-8&#x27;);
+    return paths = paths.concat(exports.collectPathsSync(content, path.dirname(fullPath)));
+  });
+  return paths;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+The following methods are available from the `aglio` library:
+
+#### aglio.collectPathsSync (blueprint, includePath)
+Get a list of paths that are included in the blueprint. This list can be watched for changes to do things like live reload. The
+blueprint&#x27;s own path is not included.
+
+```javascript
+var blueprint = &#x27;# GET /foo\n&#x3c;-- include(example.json --&#x3e;\n&#x27;;
+var watchPaths = aglio.<span class="apidocCodeKeywordSpan">collectPathsSync</span>(blueprint, process.cwd())
+```
+
+#### aglio.render (blueprint, options, callback)
+Render an API Blueprint string and pass the generated HTML to the callback. The `options` can either be an object of options or
+a simple layout name or file path string. Available options are:
+
+| Option      | Type   | Default       | Description                           |
+| ----------- | ------ | ------------- | ------------------------------------- |
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.compileFile" id="apidoc.element.aglio.compileFile">
+        function <span class="apidocSignatureSpan">aglio.</span>compileFile
+        <span class="apidocSignatureSpan">(inputFile, outputFile, done)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">compileFile = function (inputFile, outputFile, done) {
+  var compile;
+  compile = function(input) {
+    var compiled;
+    compiled = includeDirective(path.dirname(inputFile), input);
+    if (outputFile !== &#x27;-&#x27;) {
+      return fs.writeFile(outputFile, compiled, function(err) {
+        return done(err);
+      });
+    } else {
+      console.log(compiled);
+      return done(null);
+    }
+  };
+  if (inputFile !== &#x27;-&#x27;) {
+    return fs.readFile(inputFile, {
+      encoding: &#x27;utf-8&#x27;
+    }, function(err, input) {
+      if (err) {
+        return done(errMsg(&#x27;Error writing output&#x27;, err));
+      }
+      return compile(input.toString());
+    });
+  } else {
+    process.stdin.setEncoding(&#x27;utf-8&#x27;);
+    return process.stdin.on(&#x27;readable&#x27;, function() {
+      var chunk;
+      chunk = process.stdin.read();
+      if (chunk != null) {
+        return compile(chunk);
+      }
+    });
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  return done();
+} else {
+  if (!argv.i || !argv.o) {
+    parser.showHelp();
+    return done(&#x27;Invalid arguments&#x27;);
+  }
+  if (argv.c || (typeof argv.o === &#x27;string&#x27; &#x26;&#x26; (argv.o.match(/\.apib$/ || argv.o.match(/\.md$/))))) {
+    return aglio.<span class="apidocCodeKeywordSpan">compileFile</span>(argv.i, argv.o, function(err) {
+      if (err) {
+        logError(err, argv.verbose);
+      }
+      return done();
+    });
+  } else {
+    return aglio.renderFile(argv.i, argv.o, argv, function(err, warnings) {
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.getTheme" id="apidoc.element.aglio.getTheme">
+        function <span class="apidocSignatureSpan">aglio.</span>getTheme
+        <span class="apidocSignatureSpan">(name)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getTheme = function (name) {
+  if (!name || indexOf.call(LEGACY_TEMPLATES, name) &#x3e;= 0) {
+    name = &#x27;olio&#x27;;
+  }
+  return require(&#x22;aglio-theme-&#x22; + name);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  argv.themeTemplate = argv.theme;
+  argv.theme = &#x27;default&#x27;;
+}
+if (argv.verbose) {
+  console.log(&#x22;Loading theme &#x22; + argv.theme);
+}
+try {
+  theme = aglio.<span class="apidocCodeKeywordSpan">getTheme</span>(argv.theme);
+} catch (_error) {
+  err = _error;
+  err.message = &#x22;Could not load theme: &#x22; + err.message;
+  logError(err, argv.verbose);
+  return done(err);
+}
+config = theme.getConfig();
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.render" id="apidoc.element.aglio.render">
+        function <span class="apidocSignatureSpan">aglio.</span>render
+        <span class="apidocSignatureSpan">(input, options, done)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">render = function (input, options, done) {
+  var filteredInput, ref, variables;
+  if (typeof options === &#x27;string&#x27; || options instanceof String) {
+    options = {
+      theme: options
+    };
+  }
+  if (options.filterInput == null) {
+    options.filterInput = true;
+  }
+  if (options.includePath == null) {
+    options.includePath = process.cwd();
+  }
+  if (options.theme == null) {
+    options.theme = &#x27;default&#x27;;
+  }
+  if (options.template) {
+    options.theme = options.template;
+  }
+  if (fs.existsSync(options.theme)) {
+    console.log(&#x22;Setting theme to olio and layout to &#x22; + options.theme);
+    options.themeLayout = options.theme;
+    options.theme = &#x27;olio&#x27;;
+  } else if (options.theme !== &#x27;default&#x27; &#x26;&#x26; (ref = options.theme, indexOf.call(LEGACY_TEMPLATES, ref) &#x3e;= 0)) {
+    variables = options.theme.split(&#x27;-&#x27;)[0];
+    console.log(&#x22;Setting theme to olio and variables to &#x22; + variables);
+    options.themeVariables = variables;
+    options.theme = &#x27;olio&#x27;;
+  }
+  input = includeDirective(options.includePath, input);
+  filteredInput = !options.filterInput ? input : input.replace(/\r\n?/g, &#x27;\n&#x27;).replace(/\t/g, &#x27;    &#x27;);
+  benchmark.start(&#x27;parse&#x27;);
+  return drafter.parse(filteredInput, {
+    type: &#x27;ast&#x27;
+  }, function(err, res) {
+    var f, i, len, name, option, ref1, theme, words;
+    benchmark.end(&#x27;parse&#x27;);
+    if (err) {
+      err.input = input;
+      return done(errMsg(&#x27;Error parsing input&#x27;, err));
+    }
+    try {
+      theme = exports.getTheme(options.theme);
+    } catch (_error) {
+      err = _error;
+      return done(errMsg(&#x27;Error getting theme&#x27;, err));
+    }
+    ref1 = theme.getConfig().options || [];
+    for (i = 0, len = ref1.length; i &#x3c; len; i++) {
+      option = ref1[i];
+      words = (function() {
+        var j, len1, ref2, results;
+        ref2 = option.name.split(&#x27;-&#x27;);
+        results = [];
+        for (j = 0, len1 = ref2.length; j &#x3c; len1; j++) {
+          f = ref2[j];
+          results.push(f[0].toUpperCase() + f.slice(1));
+        }
+        return results;
+      })();
+      name = &#x22;theme&#x22; + (words.join(&#x27;&#x27;));
+      if (options[name] == null) {
+        options[name] = option[&#x22;default&#x22;];
+      }
+    }
+    benchmark.start(&#x27;render-total&#x27;);
+    return theme.render(res.ast, options, function(err, html) {
+      benchmark.end(&#x27;render-total&#x27;);
+      if (err) {
+        return done(err);
+      }
+      res.warnings.input = filteredInput;
+      return done(null, html, res.warnings);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Render a blueprint with a template by name
+var blueprint = &#x27;# Some API Blueprint string&#x27;;
+var options = {
+  themeVariables: &#x27;default&#x27;
+};
+
+aglio.<span class="apidocCodeKeywordSpan">render</span>(blueprint, options, function (err, html, warnings) {
+    if (err) return console.log(err);
+    if (warnings) console.log(warnings);
+
+    console.log(html);
+});
+
+// Render a blueprint with a custom template file
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.renderFile" id="apidoc.element.aglio.renderFile">
+        function <span class="apidocSignatureSpan">aglio.</span>renderFile
+        <span class="apidocSignatureSpan">(inputFile, outputFile, options, done)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">renderFile = function (inputFile, outputFile, options, done) {
+  var render;
+  render = function(input) {
+    return exports.render(input, options, function(err, html, warnings) {
+      if (err) {
+        return done(err);
+      }
+      if (outputFile !== &#x27;-&#x27;) {
+        return fs.writeFile(outputFile, html, function(err) {
+          return done(err, warnings);
+        });
+      } else {
+        console.log(html);
+        return done(null, warnings);
+      }
+    });
+  };
+  if (inputFile !== &#x27;-&#x27;) {
+    if (options.includePath == null) {
+      options.includePath = path.dirname(inputFile);
+    }
+    return fs.readFile(inputFile, {
+      encoding: &#x27;utf-8&#x27;
+    }, function(err, input) {
+      if (err) {
+        return done(errMsg(&#x27;Error reading input&#x27;, err));
+      }
+      return render(input.toString());
+    });
+  } else {
+    process.stdin.setEncoding(&#x27;utf-8&#x27;);
+    return process.stdin.on(&#x27;readable&#x27;, function() {
+      var chunk;
+      chunk = process.stdin.read();
+      if (chunk != null) {
+        return render(chunk);
+      }
+    });
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+});
+```
+
+#### aglio.renderFile (inputFile, outputFile, options, callback)
+Render an API Blueprint file and save the HTML to another file. The input/output file arguments are file paths. The options behaves
+ the same as above for `aglio.render`, except that the `options.includePath` defaults to the basename of the input filename.
+
+```javascript
+aglio.<span class="apidocCodeKeywordSpan">renderFile</span>(&#x27;/tmp/input.apib&#x27;, &#x27;/tmp/output.html&#x27;, options,
+function (err, warnings) {
+    if (err) return console.log(err);
+    if (warnings) console.log(warnings);
+});
+```
+
+# Development
+Pull requests are encouraged! Feel free to fork and hack away, especially on new themes. The build system in use is Grunt, so make
+ sure you have it installed:
+...</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.aglio.bin" id="apidoc.module.aglio.bin">module aglio.bin</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.aglio.bin.run" id="apidoc.element.aglio.bin.run">
+        function <span class="apidocSignatureSpan">aglio.bin.</span>run
+        <span class="apidocSignatureSpan">(argv, done)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">run = function (argv, done) {
+  var _html, config, entry, err, getHtml, i, io, len, paths, ref, sendHtml, server, theme, watcher;
+  if (argv == null) {
+    argv = parser.argv;
+  }
+  if (done == null) {
+    done = function() {};
+  }
+  _html = null;
+  getHtml = function(cb) {
+    if (_html) {
+      return cb &#x26;&#x26; cb(null, _html);
+    } else {
+      return fs.readFile(argv.i, &#x22;utf-8&#x22;, function(err, blueprint) {
+        console.log(&#x22;Rendering &#x22; + argv.i);
+        return aglio.render(blueprint, argv, function(err, html, warnings) {
+          logWarnings(warnings);
+          if (err) {
+            logError(err, argv.verbose);
+            return cb &#x26;&#x26; cb(err);
+          } else {
+            _html = html;
+            return cb &#x26;&#x26; cb(null, _html);
+          }
+        });
+      });
+    }
+  };
+  if (argv.version) {
+    console.log(&#x22;aglio &#x22; + (require(&#x27;../package.json&#x27;).version));
+    console.log(&#x22;olio &#x22; + (require(&#x27;aglio-theme-olio/package.json&#x27;).version));
+    return done();
+  }
+  if (argv.template) {
+    argv.theme = argv.template;
+  }
+  if (fs.existsSync(argv.theme)) {
+    argv.themeTemplate = argv.theme;
+    argv.theme = &#x27;default&#x27;;
+  }
+  if (argv.verbose) {
+    console.log(&#x22;Loading theme &#x22; + argv.theme);
+  }
+  try {
+    theme = aglio.getTheme(argv.theme);
+  } catch (_error) {
+    err = _error;
+    err.message = &#x22;Could not load theme: &#x22; + err.message;
+    logError(err, argv.verbose);
+    return done(err);
+  }
+  config = theme.getConfig();
+  ref = config.options;
+  for (i = 0, len = ref.length; i &#x3c; len; i++) {
+    entry = ref[i];
+    parser.options(&#x22;theme-&#x22; + entry.name, entry);
+  }
+  if (argv.s) {
+    if (!argv.i) {
+      parser.showHelp();
+      return done(&#x27;Invalid arguments&#x27;);
+    }
+    argv.locals = {
+      livePreview: true
+    };
+    if (argv.i !== &#x27;-&#x27;) {
+      argv.includePath = path.dirname(argv.i);
+    }
+    getHtml();
+    server = http.createServer(function(req, res) {
+      var serve;
+      if (req.url !== &#x27;/&#x27;) {
+        serve = serveStatic(path.dirname(argv.i));
+        return serve(req, res, function() {
+          return res.end();
+        });
+      }
+      return getHtml(function(err, html) {
+        res.writeHead(200, {
+          &#x22;Content-Type&#x22;: &#x22;text/html&#x22;
+        });
+        return res.end((err ? err.toString() : html));
+      });
+    }).listen(argv.p, argv.h, function() {
+      return console.log(&#x22;Server started on http://&#x22; + argv.h + &#x22;:&#x22; + argv.p + &#x22;/&#x22;);
+    });
+    sendHtml = function(socket) {
+      return getHtml(function(err, html) {
+        var re;
+        if (!err) {
+          console.log(&#x22;Refresh web page in browser&#x22;);
+          re = /&#x3c;body.*?&#x3e;[^]*&#x3c;\/body&#x3e;/gi;
+          html = html.match(re)[0];
+          return socket.emit(&#x22;refresh&#x22;, html);
+        }
+      });
+    };
+    io = require(&#x22;socket.io&#x22;)(server);
+    io.on(&#x22;connection&#x22;, function(socket) {
+      console.log(&#x22;Socket connected&#x22;);
+      return socket.on(&#x27;request-refresh&#x27;, function() {
+        return sendHtml(socket);
+      });
+    });
+    paths = aglio.collectPathsSync(fs.readFileSync(argv.i, &#x27;utf-8&#x27;), path.dirname(argv.i));
+    watcher = chokidar.watch([argv.i].concat(paths));
+    watcher.on(&#x22;change&#x22;, function(path) {
+      console.log(&#x22;Updated &#x22; + path);
+      _html = null;
+      return sendHtml(io);
+    });
+    return done();
+  } else {
+    if (!argv.i || !argv.o) {
+      parser.showHelp();
+      return done(&#x27;Invalid arguments&#x27;);
+    }
+    if (argv.c || (typeof argv.o === &#x27;string&#x27; &#x26;&#x26; (argv.o.match(/\.apib$/ || argv.o.match(/\.md$/))))) {
+      return aglio.compileFile(argv.i, argv.o, function(err) {
+        if (err) {
+          logError(err, argv.verbose);
+        }
+        return done();
+      });
+    } else {
+      return aglio.renderFile(argv.i, argv.o, argv, function(err, warnings) {
+        var lineNo;
+        if (err) {
+          lineNo = getLineNo(err.input, err);
+          if (lineNo != null) {
+            console.error(cErr(&#x22;&#x3e;&#x3e; Line &#x22; + lineNo + &#x22;:&#x22;) + (&#x22; &#x22; + err.message + &#x22; (error code &#x22; + err.code + &#x22;)&#x22;));
+          } else {
+            logError(err, argv.verbose);
+          }
+          return done(err);
+        }
+        logWarnings(warning ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+
+
+#!/usr/bin/env node
+
+process.title = &#x27;aglio&#x27;;
+
+require(&#x27;../lib/bin&#x27;).<span class="apidocCodeKeywordSpan">run</span>(null, function(err){
+	if(err){
+		process.exit(1);
+	}
+});
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
