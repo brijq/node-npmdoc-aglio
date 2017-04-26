@@ -46,7 +46,7 @@
             local.global.utility2_npmdoc_aglio = local;
         } else {
             module.exports = local;
-            module.exports.__dirname = __dirname;
+            module.exports.__dirname = process.cwd();
             module.exports.module = module;
         }
     }());
